@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brian Rodvien — Composer &amp; Music Producer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Karla:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:       #080808;
+      --surface:  #111111;
+      --border:   #1e1e1e;
+      --text:     #ddd6c8;
+      --muted:    #5a5248;
+      --gold:     #c8a96e;
+      --gold-dim: #8a7248;
+      --white:    #f0ebe3;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Karla', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: -50%;
+      width: 200%; height: 200%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0.028;
+      pointer-events: none;
+      z-index: 500;
+      animation: grain 0.4s steps(1) infinite;
+    }
+    @keyframes grain {
+      0%  { transform:translate(0,0); }
+      25% { transform:translate(-2%,-3%); }
+      50% { transform:translate(3%,1%); }
+      75% { transform:translate(-1%,4%); }
+      100%{ transform:translate(2%,-2%); }
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top:0; left:0; right:0;
+      z-index: 1000;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.5rem 3rem;
+      transition: background 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(8,8,8,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; font-weight: 400; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--white); text-decoration: none;
+    }
+    .nav-links { display:flex; gap:2rem; list-style:none; }
+    .nav-links a {
+      font-size: 0.67rem; font-weight: 500; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--muted);
+      text-decoration: none; transition: color 0.25s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a.theater { color: var(--gold-dim); }
+    .nav-links a.theater:hover { color: var(--gold); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 9rem 3rem 5rem;
+
+    }
+    .hero-tagline {
+      font-size: 0.67rem; font-weight: 500; letter-spacing: 0.32em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 1.8rem;
+      opacity: 0; animation: fadeUp 0.9s 0.2s forwards;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.8rem, 9vw, 9rem);
+      font-weight: 300; line-height: 0.95; color: var(--white); max-width: 740px;
+      opacity: 0; animation: fadeUp 1s 0.4s forwards;
+    }
+    .hero-title em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      margin-top: 2rem; font-size: 0.85rem; letter-spacing: 0.06em; color: var(--muted);
+      opacity: 0; animation: fadeUp 0.9s 0.65s forwards;
+    }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(20px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* SECTIONS */
+    .section { padding: 6rem 3rem; border-top: 1px solid var(--border); }
+    .inner { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.63rem; font-weight: 500; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--gold-dim); margin-bottom: 3rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .section-label::after { content:''; height:1px; width:60px; background:var(--border); }
+
+    /* REVEAL — visible by default, animated only when JS runs */
+    .reveal { transition: opacity 0.8s ease, transform 0.8s ease; }
+    body.js .reveal { opacity:0; transform:translateY(24px); }
+    body.js .reveal.in { opacity:1; transform:translateY(0); }
+
+    /* WORK */
+    .work-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.2rem; }
+    .work-grid .featured { grid-column:1/-1; }
+    .video-card {
+      background: var(--surface); border: 1px solid var(--border);
+      overflow: hidden; transition: border-color 0.3s;
+    }
+    .video-card:hover { border-color: var(--gold-dim); }
+    .vid-thumb {
+      position: relative; padding-bottom: 56.25%; height: 0;
+      overflow: hidden; cursor: pointer; background: #0d0d0d;
+    }
+    .featured .vid-thumb { padding-bottom: 42%; }
+    .vid-thumb img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; opacity: 0.72; transition: opacity 0.3s;
+    }
+    .vid-thumb:hover img { opacity: 0.9; }
+    .play-btn {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 54px; height: 54px;
+      border: 1.5px solid rgba(200,169,110,0.65);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.25s, background 0.25s;
+      pointer-events: none;
+    }
+    .vid-thumb:hover .play-btn { border-color: var(--gold); background: rgba(200,169,110,0.1); }
+    .play-btn svg { fill: var(--gold); width: 16px; height: 16px; margin-left: 3px; }
+    .embed-wrap { position:relative; padding-bottom:56.25%; height:0; overflow:hidden; }
+    .featured .embed-wrap { padding-bottom: 42%; }
+    .embed-wrap iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }    .card-info {
+      padding: 0.85rem 1.1rem;
+      display: flex; justify-content: space-between; align-items: baseline;
+      border-top: 1px solid var(--border);
+    }
+    .card-title { font-family:'Cormorant Garamond',serif; font-size:1rem; font-weight:400; color:var(--white); }
+    .card-type { font-size:0.58rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); }
+
+    /* ABOUT */
+    .about-grid { display:grid; grid-template-columns:1fr 1.5fr; gap:5rem; }
+    .about-grid h2 {
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2rem,4vw,3rem); font-weight:300; line-height:1.2;
+      color:var(--white); margin-bottom:2rem;
+    }
+    .about-grid h2 em { font-style:italic; color:var(--gold); }
+    .process-block {
+      margin-top:2.5rem; padding:1.5rem;
+      border:1px solid var(--border); border-left:3px solid var(--gold);
+      background:var(--surface);
+    }
+    .process-block h3 {
+      font-family:'Cormorant Garamond',serif; font-size:0.67rem;
+      letter-spacing:0.28em; text-transform:uppercase; color:var(--gold); margin-bottom:0.7rem;
+    }
+    .process-block p { font-size:0.87rem; color:var(--muted); }
+    .bio-label {
+      font-size:0.62rem; font-weight:500; letter-spacing:0.28em;
+      text-transform:uppercase; color:var(--gold-dim); margin-bottom:0.9rem;
+    }
+    .bio-statement {
+      font-family:'Cormorant Garamond',serif; font-size:1.1rem;
+      font-style:italic; font-weight:300; line-height:1.75;
+      color:var(--text); margin-bottom:2.5rem;
+    }
+    .bio-text { font-size:0.87rem; color:var(--muted); line-height:1.9; margin-bottom:1rem; }
+
+    /* TESTIMONIALS */
+    .t-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; }
+    .t-card {
+      padding:1.7rem; border:1px solid var(--border); background:var(--surface);
+      transition:border-color 0.3s, transform 0.3s;
+    }
+    .t-card:hover { border-color:var(--gold-dim); transform:translateY(-2px); }
+    .t-card blockquote {
+      font-family:'Cormorant Garamond',serif; font-size:1rem;
+      font-style:italic; font-weight:300; line-height:1.65;
+      color:var(--text); margin-bottom:1.3rem;
+    }
+    .t-card blockquote::before {
+      content:'\201C'; font-size:2rem; line-height:0;
+      vertical-align:-0.4rem; color:var(--gold-dim); margin-right:0.05em;
+    }
+    .t-name { display:block; font-size:0.75rem; font-weight:500; letter-spacing:0.06em; color:var(--white); }
+    .t-role { display:block; font-size:0.64rem; letter-spacing:0.1em; color:var(--muted); margin-top:0.1rem; }
+
+    /* CONTACT */
+    .contact-inner { max-width:600px; margin:0 auto; text-align:center; }
+    .contact-inner .section-label { justify-content:center; }
+    .contact-inner .section-label::after { display:none; }
+    .contact-inner h2 {
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2.4rem,5vw,4rem); font-weight:300;
+      line-height:1.1; color:var(--white); margin-bottom:1.3rem;
+    }
+    .contact-inner h2 em { font-style:italic; color:var(--gold); }
+    .contact-inner p { font-size:0.87rem; color:var(--muted); margin-bottom:2.2rem; }
+    .contact-email {
+      font-family:'Cormorant Garamond',serif; font-size:1.35rem;
+      letter-spacing:0.04em; color:var(--gold); cursor:pointer;
+      border-bottom:1px solid var(--gold-dim); padding-bottom:0.2rem;
+      transition:color 0.25s, border-color 0.25s;
+    }
+    .contact-email:hover { color:var(--white); border-color:var(--white); }
+
+    /* FOOTER */
+    footer {
+      border-top:1px solid var(--border); padding:1.8rem 3rem;
+      display:flex; justify-content:space-between; align-items:center;
+    }
+    footer span { font-size:0.61rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); }
+
+    /* RESPONSIVE */
+    @media (max-width:860px) {
+      nav { padding:1.3rem 1.5rem; }
+      .nav-links { gap:1.2rem; }
+      #hero { padding:7rem 1.5rem 4rem; }
+      .section { padding:4rem 1.5rem; }
+      .work-grid { grid-template-columns:1fr; }
+      .work-grid .featured { grid-column:1; }
+      .featured .embed-wrap { padding-bottom:56.25%; }
+      .about-grid { grid-template-columns:1fr; gap:3rem; }
+      .t-grid { grid-template-columns:1fr; }
+      footer { flex-direction:column; gap:0.5rem; text-align:center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <a class="nav-logo" href="#hero">Brian Rodvien</a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="listen.html">Listen</a></li>
+      <li><a href="theater.html" class="theater">N.A.S.T.</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#testimonials">Words</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <p class="hero-tagline">Creative Music &amp; Production</p>
+    <h1 class="hero-title">For the<br /><em>sake</em><br />of music.</h1>
+    <p class="hero-sub">Composer &middot; Collaborator &middot; Bay Area, California</p>
+  </section>
+
+  <!-- WORK -->
+  <div class="section" id="work">
+    <div class="inner">
+      <p class="section-label">Selected Work</p>
+      <div class="work-grid">
+
+        <div class="video-card featured reveal">
+          <div class="vid-thumb" data-src="https://www.youtube.com/embed/nDSpCU_-YSA?autoplay=1&rel=0">
+            <img src="https://img.youtube.com/vi/nDSpCU_-YSA/maxresdefault.jpg" alt="Unlucky Stars"/>
+            <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          </div>
+          <div class="card-info">
+            <span class="card-title">Unlucky Stars — Director's Cut</span>
+            <span class="card-type">Feature Film &middot; Dennis Ruel</span>
+          </div>
+        </div>
+
+        <div class="video-card reveal">
+          <div class="vid-thumb" data-src="https://www.youtube.com/embed/d2nEEOcNtKE?autoplay=1&rel=0">
+            <img src="https://img.youtube.com/vi/d2nEEOcNtKE/maxresdefault.jpg" alt="Baltimore Legend"/>
+            <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          </div>
+          <div class="card-info">
+            <span class="card-title">Baltimore Legend</span>
+            <span class="card-type">Film &middot; Bodine Boling</span>
+          </div>
+        </div>
+
+        <div class="video-card reveal">
+          <div class="vid-thumb" data-src="https://www.youtube.com/embed/D8Xcsc3r6yo?autoplay=1&rel=0">
+            <img src="https://img.youtube.com/vi/D8Xcsc3r6yo/maxresdefault.jpg" alt="Forget Me Not"/>
+            <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          </div>
+          <div class="card-info">
+            <span class="card-title">Forget Me Not</span>
+            <span class="card-type">Film &middot; Bodine Boling</span>
+          </div>
+        </div>
+
+        <div class="video-card reveal">
+          <div class="vid-thumb" data-src="https://www.youtube.com/embed/Kizuwx5RcOs?autoplay=1&rel=0">
+            <img src="https://img.youtube.com/vi/Kizuwx5RcOs/maxresdefault.jpg" alt="Noir City 13"/>
+            <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          </div>
+          <div class="card-info">
+            <span class="card-title">Noir City 13</span>
+            <span class="card-type">Trailer</span>
+          </div>
+        </div>
+
+        <div class="video-card reveal">
+          <div class="vid-thumb" data-src="https://www.youtube.com/embed/p7kJ6c_jAGA?autoplay=1&rel=0">
+            <img src="https://img.youtube.com/vi/p7kJ6c_jAGA/maxresdefault.jpg" alt="Superunknown Teaser"/>
+            <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          </div>
+          <div class="card-info">
+            <span class="card-title">Superunknown Teaser</span>
+            <span class="card-type">BronzeBeforeGold</span>
+          </div>
+        </div>
+
+        <div class="video-card reveal">
+          <div class="vid-thumb" data-type="vimeo" data-src="https://player.vimeo.com/video/189086915?autoplay=1">
+            <img src="https://vumbnail.com/189086915.jpg" alt="D.C.E."
+                 onerror="this.style.display='none'"/>
+            <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          </div>
+          <div class="card-info">
+            <span class="card-title">D.C.E.</span>
+            <span class="card-type">Short Film &middot; Jose Montesinos</span>
+          </div>
+        </div>
+
+        <div class="video-card reveal">
+          <div class="vid-thumb" data-type="vimeo" data-src="https://player.vimeo.com/video/33095448?autoplay=1">
+            <img src="https://vumbnail.com/33095448.jpg" alt="BERT the Emotion Picture"
+                 onerror="this.style.display='none'"/>
+            <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          </div>
+          <div class="card-info">
+            <span class="card-title">BERT — The Emotion Picture</span>
+            <span class="card-type">Trailer &middot; Jose Montesinos</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="section" id="about">
+    <div class="inner">
+      <div class="about-grid">
+        <div class="reveal">
+          <p class="section-label">About</p>
+          <h2>Music<br />that tells<br /><em>a story.</em></h2>
+          <div class="process-block">
+            <h3>Process</h3>
+            <p>We chat about your needs. I make a bunch of stuff. I send it to you. You tell me what's cool and what's not. Rinse and repeat. Creative, collaborative, practical.</p>
+          </div>
+        </div>
+        <div class="reveal">
+          <p class="bio-label">Statement</p>
+          <p class="bio-statement">I have loved making music my entire life. Such a wonderful part of my job is to work with creative people and tell a story in a collaborative setting — there are choices that need to get made that I wouldn't make in a vacuum. Some of my favorite music and art is a result of it.</p>
+          <p class="bio-label">Biography</p>
+          <p class="bio-text">Born in Boston, raised north of San Francisco. Piano at 3, drums at 10. Jazz band opened the door to Miles Davis, Tony Williams, Herbie Hancock — and the bass player turned me on to Rush. Practiced drums three hours a day. Studied Neuroscience &amp; Music at UCSD. Started composing at piano and guitar. Bought my first Moog. Started scoring film.</p>
+          <p class="bio-text">Some of my favorite moments have been when an editor drops a piece of my music into a timeline and something magical happens — sound and image aligning into something that couldn't have been planned. That's what I'm after.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <div class="section" id="testimonials">
+    <div class="inner">
+      <p class="section-label">In Their Words</p>
+      <div class="t-grid">
+        <div class="t-card reveal">
+          <blockquote>His scores were evocative, emotional and brought the scenes to life. Amazing to work with — professional and able to deliver on a deadline.</blockquote>
+          <span class="t-name">Ethan Prochnik</span><span class="t-role">Director / Producer / Writer</span>
+        </div>
+        <div class="t-card reveal">
+          <blockquote>I've never had a collaborator with his blend of talent, enthusiasm, work ethic, and egoless ability to take direction. Worth the hassle of making a movie just to have him on my team.</blockquote>
+          <span class="t-name">Bodine Boling</span><span class="t-role">Writer / Director</span>
+        </div>
+        <div class="t-card reveal">
+          <blockquote>Asks all the right questions to develop music that really supports any narrative. Loads of creativity, fun to work with.</blockquote>
+          <span class="t-name">Lisa Landers</span><span class="t-role">Documentary Producer / Director</span>
+        </div>
+        <div class="t-card reveal">
+          <blockquote>He explored my crazy ideas to the point of creating an entirely new genre — Hong Kong Action Jazz. I would highly recommend him to all filmmakers.</blockquote>
+          <span class="t-name">Dennis Ruel</span><span class="t-role">Filmmaker</span>
+        </div>
+        <div class="t-card reveal">
+          <blockquote>A rare gift for bridging big ideas and concrete implementation — divergent creative thinking matched with detail-oriented execution.</blockquote>
+          <span class="t-name">Beau Lewis</span><span class="t-role">CEO, RhymeCombinator</span>
+        </div>
+        <div class="t-card reveal">
+          <blockquote>Working with Brian is like asking for a drumstick and getting the whole chicken. Always goes above and beyond.</blockquote>
+          <span class="t-name">Jose Montesinos</span><span class="t-role">Filmmaker</span>
+        </div>
+        <div class="t-card reveal">
+          <blockquote>First and foremost a mensch. Getting to collaborate with him has always left me feeling like I did the right thing.</blockquote>
+          <span class="t-name">Anthony Veneziale</span><span class="t-role">Creator, Freestyle Love Supreme</span>
+        </div>
+        <div class="t-card reveal">
+          <blockquote>He turned raw subway sounds from around the world into beautiful rhythmic soundtracks acclaimed by festivals worldwide.</blockquote>
+          <span class="t-name">Herve Cohen</span><span class="t-role">Director, Life Underground</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="section" id="contact">
+    <div class="contact-inner">
+      <p class="section-label">Contact</p>
+      <h2>Let's make<br /><em>something.</em></h2>
+      <p>Tell me about your project. I'll make a bunch of stuff.<br />We'll go from there.</p>
+      <span class="contact-email" id="email-display">Get in touch</span>
+    </div>
+  </div>
+
+  <footer>
+    <span>&copy; 2026 Brian Rodvien</span>
+    <span>Creative Music &amp; Production &mdash; Bay Area, CA</span>
+  </footer>
+
+  <script>
+    // Click-to-play video thumbnails
+    document.querySelectorAll('.vid-thumb').forEach(thumb => {
+      thumb.addEventListener('click', function() {
+        const src = this.dataset.src;
+        const wrap = document.createElement('div');
+        wrap.className = 'embed-wrap';
+        // preserve featured aspect ratio
+        if (this.closest('.featured')) wrap.style.paddingBottom = '42%';
+        const iframe = document.createElement('iframe');
+        iframe.src = src;
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen';
+        iframe.allowFullscreen = true;
+        iframe.style.border = 'none';
+        wrap.appendChild(iframe);
+        this.replaceWith(wrap);
+      });
+    });
+
+    // Enable JS-powered reveal animations
+    document.body.classList.add('js');
+
+    // Reveal on scroll
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const siblings = [...entry.target.parentElement.children]
+            .filter(el => el.classList.contains('reveal'));
+          const idx = siblings.indexOf(entry.target);
+          setTimeout(() => entry.target.classList.add('in'), idx * 80);
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Nav scroll state
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Email — assembled in JS to avoid Cloudflare obfuscation
+    const el = document.getElementById('email-display');
+    const addr = ['rodvien', 'gmail.com'].join('@');
+    el.textContent = addr;
+    el.onclick = () => window.location.href = 'mailto:' + addr;
+  </script>
+
+</body>
+</html>
