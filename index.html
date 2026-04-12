@@ -76,13 +76,80 @@
     .nav-links a.theater { color: var(--gold-dim); }
     .nav-links a.theater:hover { color: var(--gold); }
 
+    /* HAMBURGER */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 28px; height: 28px;
+      cursor: pointer;
+      background: none; border: none; padding: 0;
+      z-index: 200;
+    }
+    .nav-toggle span {
+      display: block; width: 100%; height: 1px;
+      background: var(--white);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* MOBILE MENU */
+    @media (max-width: 860px) {
+      .nav-toggle { display: flex; }
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(8,8,8,0.97);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2.5rem;
+        z-index: 150;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a {
+        font-size: 0.85rem;
+        letter-spacing: 0.25em;
+        color: var(--text);
+      }
+      .nav-links a:hover { color: var(--gold); }
+    }
+
     /* HERO */
     #hero {
       min-height: 100vh;
       display: flex; flex-direction: column; justify-content: center;
       padding: 9rem 3rem 5rem;
-
+      position: relative;
+      background-image: url('hero.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      background-repeat: no-repeat;
     }
+    /* Dark overlay */
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(8,8,8,0.72);
+      pointer-events: none;
+    }
+    /* Fade to black at bottom */
+    #hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 220px;
+      background: linear-gradient(to bottom, transparent, #080808);
+      pointer-events: none;
+    }
+    /* Keep text above overlays */
+    #hero .hero-tagline,
+    #hero .hero-title,
+    #hero .hero-sub { position: relative; z-index: 1; }
     .hero-tagline {
       font-size: 0.67rem; font-weight: 500; letter-spacing: 0.32em;
       text-transform: uppercase; color: var(--gold); margin-bottom: 1.8rem;
@@ -236,7 +303,6 @@
     /* RESPONSIVE */
     @media (max-width:860px) {
       nav { padding:1.3rem 1.5rem; }
-      .nav-links { gap:1.2rem; }
       #hero { padding:7rem 1.5rem 4rem; }
       .section { padding:4rem 1.5rem; }
       .work-grid { grid-template-columns:1fr; }
@@ -252,7 +318,10 @@
 
   <nav id="nav">
     <a class="nav-logo" href="#hero">Brian Rodvien</a>
-    <ul class="nav-links">
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
       <li><a href="#work">Work</a></li>
       <li><a href="listen.html">Listen</a></li>
       <li><a href="theater.html" class="theater">N.A.S.T.</a></li>
@@ -438,6 +507,21 @@
   </footer>
 
   <script>
+    // Hamburger menu
+    const toggle = document.getElementById('nav-toggle');
+    const navLinks = document.getElementById('nav-links');
+    toggle.addEventListener('click', () => {
+      toggle.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+    // Close on link click
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        toggle.classList.remove('open');
+        navLinks.classList.remove('open');
+      });
+    });
+
     // Click-to-play video thumbnails
     document.querySelectorAll('.vid-thumb').forEach(thumb => {
       thumb.addEventListener('click', function() {
