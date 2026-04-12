@@ -146,6 +146,9 @@
       background: linear-gradient(to bottom, transparent, #080808);
       pointer-events: none;
     }
+    @media (max-width:860px) {
+      #hero::after { height: 160px; }
+    }
     /* Keep text above overlays */
     #hero .hero-tagline,
     #hero .hero-title,
@@ -303,7 +306,11 @@
     /* RESPONSIVE */
     @media (max-width:860px) {
       nav { padding:1.3rem 1.5rem; }
-      #hero { min-height: 80vh; padding:7rem 1.5rem 3rem; }
+      #hero {
+        min-height: 80vh;
+        padding:7rem 1.5rem 3rem;
+        background-position: center 40%;
+      }
       .section { padding:3rem 1.5rem; }
       .work-grid { grid-template-columns:1fr; }
       .work-grid .featured { grid-column:1; }
