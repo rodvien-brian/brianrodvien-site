@@ -32,7 +32,21 @@
       font-size: 16px;
       line-height: 1.7;
       overflow-x: hidden;
+      background-image: url('stone.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
     }
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: rgba(8,8,8,0.91);
+      pointer-events: none;
+      z-index: 0;
+    }
+    nav, #hero, #films, #channel-cta, footer { position: relative; z-index: 1; }
 
     /* ─── GRAIN ───────────────────────────────────────────────────── */
     body::before {
@@ -217,46 +231,6 @@
       border: none;
     }
 
-    /* ─── THUMBNAIL OVERLAY ───────────────────────────────────────── */
-    .vid-thumb {
-      position: absolute;
-      inset: 0;
-      cursor: pointer;
-      background: #0a0a0d;
-    }
-
-    .vid-thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.7;
-      transition: opacity 0.35s;
-      display: block;
-    }
-
-    .vid-thumb:hover img { opacity: 0.88; }
-
-    .play-btn {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 60px; height: 60px;
-      border: 1.5px solid rgba(155, 138, 191, 0.65);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      transition: border-color 0.25s, background 0.25s;
-      pointer-events: none;
-    }
-
-    .vid-thumb:hover .play-btn {
-      border-color: var(--accent);
-      background: rgba(155, 138, 191, 0.12);
-    }
-
-    .play-btn svg {
-      margin-left: 4px;
-    }
-
     .film-meta {
       margin-top: 1.2rem;
       display: flex;
@@ -376,11 +350,9 @@
 
     <div class="film-entry">
       <p class="film-number">No. 001</p>
-      <div class="embed-wrap" data-id="TfDLy7Yql9c">
-        <div class="vid-thumb" onclick="loadVideo(this)">
-          <img src="https://i.ytimg.com/vi/TfDLy7Yql9c/maxresdefault.jpg" alt="182" loading="lazy" />
-          <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1l12 7L1 15V1z" fill="rgba(155,138,191,0.9)" stroke="rgba(155,138,191,0.9)" stroke-width="1" stroke-linejoin="round"/></svg></div>
-        </div>
+      <div class="embed-wrap">
+        <iframe src="https://www.youtube.com/embed/TfDLy7Yql9c" title="182"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
       <div class="film-meta">
         <span class="film-title">182</span>
@@ -390,11 +362,9 @@
 
     <div class="film-entry">
       <p class="film-number">No. 002</p>
-      <div class="embed-wrap" data-id="3X2Jo_2jfGg">
-        <div class="vid-thumb" onclick="loadVideo(this)">
-          <img src="https://i.ytimg.com/vi/3X2Jo_2jfGg/maxresdefault.jpg" alt="Day 177" loading="lazy" />
-          <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1l12 7L1 15V1z" fill="rgba(155,138,191,0.9)" stroke="rgba(155,138,191,0.9)" stroke-width="1" stroke-linejoin="round"/></svg></div>
-        </div>
+      <div class="embed-wrap">
+        <iframe src="https://www.youtube.com/embed/3X2Jo_2jfGg" title="Day 177"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
       <div class="film-meta">
         <span class="film-title">Day 177</span>
@@ -404,11 +374,9 @@
 
     <div class="film-entry">
       <p class="film-number">No. 003</p>
-      <div class="embed-wrap" data-id="nefveQ06ZS0">
-        <div class="vid-thumb" onclick="loadVideo(this)">
-          <img src="https://i.ytimg.com/vi/nefveQ06ZS0/maxresdefault.jpg" alt="Celebrating Nothing" loading="lazy" />
-          <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1l12 7L1 15V1z" fill="rgba(155,138,191,0.9)" stroke="rgba(155,138,191,0.9)" stroke-width="1" stroke-linejoin="round"/></svg></div>
-        </div>
+      <div class="embed-wrap">
+        <iframe src="https://www.youtube.com/embed/nefveQ06ZS0" title="Celebrating Nothing"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
       <div class="film-meta">
         <span class="film-title">Celebrating Nothing</span>
@@ -418,11 +386,9 @@
 
     <div class="film-entry">
       <p class="film-number">No. 004</p>
-      <div class="embed-wrap" data-id="6MLx9x262kE">
-        <div class="vid-thumb" onclick="loadVideo(this)">
-          <img src="https://i.ytimg.com/vi/6MLx9x262kE/maxresdefault.jpg" alt="A Sharp Turn" loading="lazy" />
-          <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1l12 7L1 15V1z" fill="rgba(155,138,191,0.9)" stroke="rgba(155,138,191,0.9)" stroke-width="1" stroke-linejoin="round"/></svg></div>
-        </div>
+      <div class="embed-wrap">
+        <iframe src="https://www.youtube.com/embed/6MLx9x262kE" title="A Sharp Turn"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
       <div class="film-meta">
         <span class="film-title">A Sharp Turn</span>
@@ -432,11 +398,9 @@
 
     <div class="film-entry">
       <p class="film-number">No. 005</p>
-      <div class="embed-wrap" data-id="M5n5RGs9W30">
-        <div class="vid-thumb" onclick="loadVideo(this)">
-          <img src="https://i.ytimg.com/vi/M5n5RGs9W30/maxresdefault.jpg" alt="Day 170" loading="lazy" />
-          <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1l12 7L1 15V1z" fill="rgba(155,138,191,0.9)" stroke="rgba(155,138,191,0.9)" stroke-width="1" stroke-linejoin="round"/></svg></div>
-        </div>
+      <div class="embed-wrap">
+        <iframe src="https://www.youtube.com/embed/M5n5RGs9W30" title="Day 170"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
       <div class="film-meta">
         <span class="film-title">Day 170</span>
@@ -446,11 +410,9 @@
 
     <div class="film-entry">
       <p class="film-number">No. 006</p>
-      <div class="embed-wrap" data-id="GoQcvCN-0CE">
-        <div class="vid-thumb" onclick="loadVideo(this)">
-          <img src="https://i.ytimg.com/vi/GoQcvCN-0CE/maxresdefault.jpg" alt="No Place to Fall" loading="lazy" />
-          <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1l12 7L1 15V1z" fill="rgba(155,138,191,0.9)" stroke="rgba(155,138,191,0.9)" stroke-width="1" stroke-linejoin="round"/></svg></div>
-        </div>
+      <div class="embed-wrap">
+        <iframe src="https://www.youtube.com/embed/GoQcvCN-0CE" title="No Place to Fall"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
       <div class="film-meta">
         <span class="film-title">No Place to Fall</span>
@@ -460,11 +422,9 @@
 
     <div class="film-entry">
       <p class="film-number">No. 007</p>
-      <div class="embed-wrap" data-id="M3KLkixetpk">
-        <div class="vid-thumb" onclick="loadVideo(this)">
-          <img src="https://i.ytimg.com/vi/M3KLkixetpk/maxresdefault.jpg" alt="For Every Atom" loading="lazy" />
-          <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1l12 7L1 15V1z" fill="rgba(155,138,191,0.9)" stroke="rgba(155,138,191,0.9)" stroke-width="1" stroke-linejoin="round"/></svg></div>
-        </div>
+      <div class="embed-wrap">
+        <iframe src="https://www.youtube.com/embed/M3KLkixetpk" title="For Every Atom"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
       <div class="film-meta">
         <span class="film-title">For Every Atom</span>
@@ -474,11 +434,9 @@
 
     <div class="film-entry">
       <p class="film-number">No. 008</p>
-      <div class="embed-wrap" data-id="zCwmhTi2rlA">
-        <div class="vid-thumb" onclick="loadVideo(this)">
-          <img src="https://i.ytimg.com/vi/zCwmhTi2rlA/maxresdefault.jpg" alt="Americans Today" loading="lazy" />
-          <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1l12 7L1 15V1z" fill="rgba(155,138,191,0.9)" stroke="rgba(155,138,191,0.9)" stroke-width="1" stroke-linejoin="round"/></svg></div>
-        </div>
+      <div class="embed-wrap">
+        <iframe src="https://www.youtube.com/embed/zCwmhTi2rlA" title="Americans Today"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
       <div class="film-meta">
         <span class="film-title">Americans Today</span>
@@ -503,18 +461,6 @@
   </footer>
 
   <script>
-    function loadVideo(thumb) {
-      const wrap = thumb.parentElement;
-      const id = wrap.dataset.id;
-      const iframe = document.createElement('iframe');
-      iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
-      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-      iframe.allowFullscreen = true;
-      iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none;';
-      wrap.removeChild(thumb);
-      wrap.appendChild(iframe);
-    }
-
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 40);
