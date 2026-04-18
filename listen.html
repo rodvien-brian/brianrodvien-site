@@ -202,16 +202,18 @@
       position: relative;
       border-radius: 16px;
       overflow: hidden;
-    }
-    .playlist-embed::before {
-      content: '';
-      position: absolute;
-      inset: 0;
+      padding: 24px 0;
       background-image: url('listen-bg.jpg');
       background-size: cover;
       background-position: center 40%;
-      opacity: 0.18;
+    }
+    .playlist-embed::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(8,8,8,0.80);
       z-index: 0;
+      pointer-events: none;
     }
     .playlist-embed iframe {
       position: relative;
