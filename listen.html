@@ -279,7 +279,7 @@
       <div class="playlist-block">
         <div class="playlist-meta">
           <p class="playlist-number">Playlist 001</p>
-          <h2 class="playlist-title">In the Mysterious Heart of My Mind</h2>
+          <h2 class="playlist-title">The Mysterious Heart of My Mind</h2>
           <p class="playlist-desc">Original compositions spanning drama, documentary, and experimental film.</p>
         </div>
         <div class="playlist-embed">
@@ -341,6 +341,22 @@
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Stop other players when a playlist is clicked
+    const embeds = document.querySelectorAll('.playlist-embed');
+    embeds.forEach(embed => {
+      embed.addEventListener('click', () => {
+        embeds.forEach(other => {
+          if (other !== embed) {
+            const iframe = other.querySelector('iframe');
+            if (iframe) {
+              // Reload the iframe to stop playback
+              iframe.src = iframe.src;
+            }
+          }
+        });
+      });
     });
   </script>
 
