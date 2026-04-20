@@ -222,7 +222,6 @@
       overflow: hidden;
       border: 1px solid var(--border);
     }
-
     .embed-wrap iframe {
       position: absolute;
       inset: 0;
@@ -230,6 +229,41 @@
       height: 100%;
       border: none;
     }
+
+    /* Thumbnail click-to-play */
+    .vid-thumb {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      background: #0d0d0d;
+    }
+    .vid-thumb img {
+      position: absolute;
+      inset: 0; width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.75;
+      transition: opacity 0.3s;
+    }
+    .vid-thumb:hover img { opacity: 0.92; }
+    .play-btn {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 54px; height: 54px;
+      border: 1.5px solid rgba(155,138,191,0.65);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.25s, background 0.25s;
+      pointer-events: none;
+    }
+    .vid-thumb:hover .play-btn {
+      border-color: var(--accent);
+      background: rgba(155,138,191,0.12);
+    }
+    .play-btn svg { fill: var(--accent); width: 16px; height: 16px; margin-left: 3px; }
 
     .film-meta {
       margin-top: 1.2rem;
@@ -350,9 +384,9 @@
 
     <div class="film-entry">
       <p class="film-number">No. 001</p>
-      <div class="embed-wrap">
-        <iframe src="https://www.youtube.com/embed/TfDLy7Yql9c" title="182"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="vid-thumb" data-src="https://www.youtube.com/embed/TfDLy7Yql9c?autoplay=1&rel=0">
+        <img src="https://img.youtube.com/vi/TfDLy7Yql9c/maxresdefault.jpg" alt="182"/>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
       <div class="film-meta">
         <span class="film-title">182</span>
@@ -362,9 +396,9 @@
 
     <div class="film-entry">
       <p class="film-number">No. 002</p>
-      <div class="embed-wrap">
-        <iframe src="https://www.youtube.com/embed/3X2Jo_2jfGg" title="Day 177"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="vid-thumb" data-src="https://www.youtube.com/embed/3X2Jo_2jfGg?autoplay=1&rel=0">
+        <img src="https://img.youtube.com/vi/3X2Jo_2jfGg/maxresdefault.jpg" alt="Day 177"/>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
       <div class="film-meta">
         <span class="film-title">Day 177</span>
@@ -374,9 +408,9 @@
 
     <div class="film-entry">
       <p class="film-number">No. 003</p>
-      <div class="embed-wrap">
-        <iframe src="https://www.youtube.com/embed/nefveQ06ZS0" title="Celebrating Nothing"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="vid-thumb" data-src="https://www.youtube.com/embed/nefveQ06ZS0?autoplay=1&rel=0">
+        <img src="https://img.youtube.com/vi/nefveQ06ZS0/maxresdefault.jpg" alt="Celebrating Nothing"/>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
       <div class="film-meta">
         <span class="film-title">Celebrating Nothing</span>
@@ -386,9 +420,9 @@
 
     <div class="film-entry">
       <p class="film-number">No. 004</p>
-      <div class="embed-wrap">
-        <iframe src="https://www.youtube.com/embed/6MLx9x262kE" title="A Sharp Turn"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="vid-thumb" data-src="https://www.youtube.com/embed/6MLx9x262kE?autoplay=1&rel=0">
+        <img src="https://img.youtube.com/vi/6MLx9x262kE/maxresdefault.jpg" alt="A Sharp Turn"/>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
       <div class="film-meta">
         <span class="film-title">A Sharp Turn</span>
@@ -398,9 +432,9 @@
 
     <div class="film-entry">
       <p class="film-number">No. 005</p>
-      <div class="embed-wrap">
-        <iframe src="https://www.youtube.com/embed/M5n5RGs9W30" title="Day 170"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="vid-thumb" data-src="https://www.youtube.com/embed/M5n5RGs9W30?autoplay=1&rel=0">
+        <img src="https://img.youtube.com/vi/M5n5RGs9W30/maxresdefault.jpg" alt="Day 170"/>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
       <div class="film-meta">
         <span class="film-title">Day 170</span>
@@ -410,9 +444,9 @@
 
     <div class="film-entry">
       <p class="film-number">No. 006</p>
-      <div class="embed-wrap">
-        <iframe src="https://www.youtube.com/embed/GoQcvCN-0CE" title="No Place to Fall"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="vid-thumb" data-src="https://www.youtube.com/embed/GoQcvCN-0CE?autoplay=1&rel=0">
+        <img src="https://img.youtube.com/vi/GoQcvCN-0CE/maxresdefault.jpg" alt="No Place to Fall"/>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
       <div class="film-meta">
         <span class="film-title">No Place to Fall</span>
@@ -422,9 +456,9 @@
 
     <div class="film-entry">
       <p class="film-number">No. 007</p>
-      <div class="embed-wrap">
-        <iframe src="https://www.youtube.com/embed/M3KLkixetpk" title="For Every Atom"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="vid-thumb" data-src="https://www.youtube.com/embed/M3KLkixetpk?autoplay=1&rel=0">
+        <img src="https://img.youtube.com/vi/M3KLkixetpk/maxresdefault.jpg" alt="For Every Atom"/>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
       <div class="film-meta">
         <span class="film-title">For Every Atom</span>
@@ -434,9 +468,9 @@
 
     <div class="film-entry">
       <p class="film-number">No. 008</p>
-      <div class="embed-wrap">
-        <iframe src="https://www.youtube.com/embed/zCwmhTi2rlA" title="Americans Today"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="vid-thumb" data-src="https://www.youtube.com/embed/zCwmhTi2rlA?autoplay=1&rel=0">
+        <img src="https://img.youtube.com/vi/zCwmhTi2rlA/maxresdefault.jpg" alt="Americans Today"/>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
       <div class="film-meta">
         <span class="film-title">Americans Today</span>
@@ -475,8 +509,22 @@
         }
       });
     }, { threshold: 0.1 });
-
     entries.forEach(el => observer.observe(el));
+
+    // Click-to-play thumbnails
+    document.querySelectorAll('.vid-thumb').forEach(thumb => {
+      thumb.addEventListener('click', function() {
+        const wrap = document.createElement('div');
+        wrap.className = 'embed-wrap';
+        const iframe = document.createElement('iframe');
+        iframe.src = this.dataset.src;
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen';
+        iframe.allowFullscreen = true;
+        iframe.style.border = 'none';
+        wrap.appendChild(iframe);
+        this.replaceWith(wrap);
+      });
+    });
   </script>
 
 </body>
