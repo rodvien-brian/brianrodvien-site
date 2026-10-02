@@ -283,7 +283,7 @@
           <p class="playlist-desc">Original compositions spanning drama, documentary, and experimental film.</p>
         </div>
         <div class="playlist-embed">
-          <iframe src="https://samply.app/embed/oC5ABL76EMrYElRuyWYx"
+          <iframe src="https://samply.app/embed/0be004f8-9b74-475f-9ed1-15cb13e94990"
             frameborder="0" allowtransparency="true" height="350"
             allow="autoplay; encrypted-media; fullscreen" loading="lazy"
             style="width:100%; border-radius:16px; border:1px solid rgba(255,255,255,0.12)">
@@ -297,7 +297,7 @@
           <h2 class="playlist-title">Moog Opus</h2>
         </div>
         <div class="playlist-embed">
-          <iframe src="https://samply.app/embed/S9aYT7ZZNrFfN3dtgq8A"
+          <iframe src="https://samply.app/embed/fa781bde-0542-4802-ab68-78abbe04f3f7"
             frameborder="0" allowtransparency="true" height="350"
             allow="autoplay; encrypted-media; fullscreen" loading="lazy"
             style="width:100%; border-radius:16px; border:1px solid rgba(255,255,255,0.12)">
@@ -311,7 +311,7 @@
           <h2 class="playlist-title">A Film for Lost Memories</h2>
         </div>
         <div class="playlist-embed">
-          <iframe src="https://samply.app/embed/oPDLO3TJIL1LpU5cxoiA"
+          <iframe src="https://samply.app/embed/6233dd54-30a1-4054-b17d-ec4e7e4fe79e"
             frameborder="0" allowtransparency="true" height="350"
             allow="autoplay; encrypted-media; fullscreen" loading="lazy"
             style="width:100%; border-radius:16px; border:1px solid rgba(255,255,255,0.12)">
@@ -325,7 +325,7 @@
           <h2 class="playlist-title">Beats</h2>
         </div>
         <div class="playlist-embed">
-          <iframe src="https://samply.app/embed/Ftu9we1ztJ5Y50pOAO84"
+          <iframe src="https://samply.app/embed/ad86e462-5e5b-43a8-b6a5-3f85ba306710"
             frameborder="0" allowtransparency="true" height="350"
             allow="autoplay; encrypted-media; fullscreen" loading="lazy"
             style="width:100%; border-radius:16px; border:1px solid rgba(255,255,255,0.12)">
@@ -339,12 +339,26 @@
           <h2 class="playlist-title">Negative Space Makes the Painting</h2>
         </div>
         <div class="playlist-embed">
-          <iframe src="https://samply.app/embed/lO36zDb729Lb67bAOnBa"
+          <iframe src="https://samply.app/embed/265ef3c7-1274-431e-99de-8009f3afa62c"
             frameborder="0" allowtransparency="true" height="350"
             allow="autoplay; encrypted-media; fullscreen" loading="lazy"
             style="width:100%; border-radius:16px; border:1px solid rgba(255,255,255,0.12)">
           </iframe>
         </div>
+
+      <div class="playlist-block">
+        <div class="playlist-meta">
+          <p class="playlist-number">Playlist 006</p>
+          <h2 class="playlist-title">Music for the Frightened Mind</h2>
+        </div>
+        <div class="playlist-embed">
+          <iframe src="https://samply.app/embed/c47b2096-b693-4295-a843-78c0a14f6175"
+            frameborder="0" allowtransparency="true" height="350"
+            allow="autoplay; encrypted-media; fullscreen" loading="lazy"
+            style="width:100%; border-radius:16px; border:1px solid rgba(255,255,255,0.12)">
+          </iframe>
+        </div>
+      </div>
       </div>
 
     </div>
@@ -368,10 +382,12 @@
     window.addEventListener('blur', () => {
       setTimeout(() => {
         const current = document.activeElement;
-        if (!players.includes(current) || current === active) return;
-        if (active) active.src = active.src; // reload to stop playback
-        active = current;
-        window.focus();
+        if (!players.includes(current)) return;
+        if (current !== active) {
+          if (active) active.src = active.src; // reload to stop playback
+          active = current;
+        }
+        window.focus(); // take focus back so the next click fires blur again
       }, 0);
     });
   </script>
