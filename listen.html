@@ -283,8 +283,9 @@
           <p class="playlist-desc">Original compositions spanning drama, documentary, and experimental film.</p>
         </div>
         <div class="playlist-embed">
-          <iframe src="https://samply.app/embed/oC5ABL76EMrYElRuyWYx?si=VqNXVf26QNaOdvjrvE84wcImtO52"
+          <iframe src="https://samply.app/embed/oC5ABL76EMrYElRuyWYx"
             frameborder="0" allowtransparency="true" height="350"
+            allow="autoplay; encrypted-media; fullscreen" loading="lazy"
             style="width:100%; border-radius:16px; border:1px solid rgba(255,255,255,0.12)">
           </iframe>
         </div>
@@ -296,8 +297,9 @@
           <h2 class="playlist-title">Moog Opus</h2>
         </div>
         <div class="playlist-embed">
-          <iframe src="https://samply.app/embed/S9aYT7ZZNrFfN3dtgq8A?si=VqNXVf26QNaOdvjrvE84wcImtO52"
+          <iframe src="https://samply.app/embed/S9aYT7ZZNrFfN3dtgq8A"
             frameborder="0" allowtransparency="true" height="350"
+            allow="autoplay; encrypted-media; fullscreen" loading="lazy"
             style="width:100%; border-radius:16px; border:1px solid rgba(255,255,255,0.12)">
           </iframe>
         </div>
@@ -309,8 +311,9 @@
           <h2 class="playlist-title">A Film for Lost Memories</h2>
         </div>
         <div class="playlist-embed">
-          <iframe src="https://samply.app/embed/oPDLO3TJIL1LpU5cxoiA?si=VqNXVf26QNaOdvjrvE84wcImtO52"
+          <iframe src="https://samply.app/embed/oPDLO3TJIL1LpU5cxoiA"
             frameborder="0" allowtransparency="true" height="350"
+            allow="autoplay; encrypted-media; fullscreen" loading="lazy"
             style="width:100%; border-radius:16px; border:1px solid rgba(255,255,255,0.12)">
           </iframe>
         </div>
@@ -322,8 +325,9 @@
           <h2 class="playlist-title">Beats</h2>
         </div>
         <div class="playlist-embed">
-          <iframe src="https://samply.app/embed/Ftu9we1ztJ5Y50pOAO84?si=VqNXVf26QNaOdvjrvE84wcImtO52"
+          <iframe src="https://samply.app/embed/Ftu9we1ztJ5Y50pOAO84"
             frameborder="0" allowtransparency="true" height="350"
+            allow="autoplay; encrypted-media; fullscreen" loading="lazy"
             style="width:100%; border-radius:16px; border:1px solid rgba(255,255,255,0.12)">
           </iframe>
         </div>
@@ -335,8 +339,9 @@
           <h2 class="playlist-title">Negative Space Makes the Painting</h2>
         </div>
         <div class="playlist-embed">
-          <iframe src="https://samply.app/embed/lO36zDb729Lb67bAOnBa?si=VqNXVf26QNaOdvjrvE84wcImtO52"
+          <iframe src="https://samply.app/embed/lO36zDb729Lb67bAOnBa"
             frameborder="0" allowtransparency="true" height="350"
+            allow="autoplay; encrypted-media; fullscreen" loading="lazy"
             style="width:100%; border-radius:16px; border:1px solid rgba(255,255,255,0.12)">
           </iframe>
         </div>
@@ -356,20 +361,18 @@
       nav.classList.toggle('scrolled', window.scrollY > 40);
     });
 
-    // Stop other players when a playlist is clicked
-    const embeds = document.querySelectorAll('.playlist-embed');
-    embeds.forEach(embed => {
-      embed.addEventListener('click', () => {
-        embeds.forEach(other => {
-          if (other !== embed) {
-            const iframe = other.querySelector('iframe');
-            if (iframe) {
-              // Reload the iframe to stop playback
-              iframe.src = iframe.src;
-            }
-          }
-        });
-      });
+    // Stop other players when one is clicked. Clicks inside a cross-origin
+    // iframe never reach the parent page, so detect focus moving into it.
+    const players = Array.from(document.querySelectorAll('.playlist-embed iframe'));
+    let active = null;
+    window.addEventListener('blur', () => {
+      setTimeout(() => {
+        const current = document.activeElement;
+        if (!players.includes(current) || current === active) return;
+        if (active) active.src = active.src; // reload to stop playback
+        active = current;
+        window.focus();
+      }, 0);
     });
   </script>
 
